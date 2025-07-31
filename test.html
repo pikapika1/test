@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Копирование текста</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .notification {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Копирование текста в буфер обмена</h1>
+    
+    <div class="container">
+        <h2>Ключ для VPN:</h2>
+        <p id="sampleText">vless://9a2610c8-9566-4370-abcc-90ac48a4f6a4@195.200.31.50:443?security=reality&sni=yimg.com&alpn=h2&fp=chrome&pbk=ckRcueERkPqqjZABwxqni_J_Nbb70Q6k5fEEUAjoImw&type=tcp&flow=xtls-rprx-vision&encryption=none#avovpn.com-664082-1724830</p>
+        <button onclick="copySampleText()">Копировать ключ</button>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            // Получаем текст из textarea
+            const textToCopy = document.getElementById('textToCopy');
+            
+            // Выделяем текст
+            textToCopy.select();
+            textToCopy.setSelectionRange(0, 99999); // Для мобильных устройств
+            
+            // Копируем текст в буфер обмена
+            document.execCommand('copy');
+            
+            // Показываем уведомление
+            showNotification();
+        }
+        
+        function copySampleText() {
+            // Получаем пример текста
+            const sampleText = document.getElementById('sampleText').innerText;
+            
+            // Создаем временный элемент textarea
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = sampleText;
+            document.body.appendChild(tempTextarea);
+            
+            // Выделяем и копируем текст
+            tempTextarea.select();
+            tempTextarea.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            
+            // Удаляем временный элемент
+            document.body.removeChild(tempTextarea);
+            
+            // Показываем уведомление
+            showNotification();
+        }
+        
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'block';
+            
+            // Скрываем уведомление через 3 секунды
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
